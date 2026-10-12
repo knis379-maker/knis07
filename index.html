@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101114">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="KNIS Garage">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="styles.css">
+<title>KNIS Garage</title>
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar"><div><div class="eyebrow">DEIN FAHRZEUG. DEINE KOSTEN.</div><h1>KNIS <span>Garage</span></h1></div><button id="installBtn" class="icon-btn" hidden aria-label="Installieren">＋</button></header>
+  <nav class="tabs" aria-label="Navigation">
+    <button class="tab active" data-view="overview">Übersicht</button>
+    <button class="tab" data-view="vehicle">Fahrzeug</button>
+    <button class="tab" data-view="entries">Einträge</button>
+  </nav>
+  <main>
+    <section id="view-overview" class="view">
+      <div class="hero-card"><div class="hero-copy"><div class="eyebrow">AKTIVES FAHRZEUG</div><h2 id="heroName">Mein Auto</h2><p id="heroMeta">Fahrzeugdaten hinzufügen</p></div><div class="car-symbol">⌁</div></div>
+      <div class="stat-grid">
+        <article class="stat-card"><span>Gesamtkosten</span><strong id="totalCost">€ 0,00</strong><small>alle erfassten Ausgaben</small></article>
+        <article class="stat-card"><span>Tankkosten</span><strong id="fuelCost">€ 0,00</strong><small id="fuelCount">0 Tankvorgänge</small></article>
+        <article class="stat-card"><span>Wartung</span><strong id="serviceCost">€ 0,00</strong><small>Service & Reparaturen</small></article>
+        <article class="stat-card"><span>Kilometerstand</span><strong id="heroKm">—</strong><small>zuletzt eingetragen</small></article>
+      </div>
+      <div class="section-head"><div><div class="eyebrow">AKTIVITÄT</div><h2>Letzte Einträge</h2></div><button class="text-btn" data-goto="entries">Alle anzeigen →</button></div>
+      <div id="recentList" class="entry-list empty-state">Noch keine Einträge. Füge deinen ersten Tankvorgang hinzu.</div>
+      <div class="quick-actions"><button class="primary-btn" data-add="fuel">＋ Tankvorgang</button><button class="secondary-btn" data-add="expense">＋ Ausgabe</button><button class="secondary-btn" data-add="service">＋ Wartung</button></div>
+    </section>
+    <section id="view-vehicle" class="view" hidden>
+      <div class="section-head"><div><div class="eyebrow">GARAGE</div><h2>Fahrzeugdaten</h2></div></div>
+      <form id="vehicleForm" class="panel form-grid">
+        <label>Fahrzeugname<input id="vName" placeholder="z. B. Peugeot 206" required></label>
+        <label>Marke<input id="vMake" placeholder="Peugeot"></label>
+        <label>Modell<input id="vModel" placeholder="206"></label>
+        <label>Baujahr<input id="vYear" type="number" min="1900" max="2100" placeholder="2008"></label>
+        <label>Kennzeichen<input id="vPlate" placeholder="W-AB 123"></label>
+        <label>Kilometerstand<input id="vKm" type="number" min="0" placeholder="185000"></label>
+        <button class="primary-btn full" type="submit">Fahrzeug speichern</button>
+      </form>
+      <div class="panel privacy-note"><strong>Deine Daten bleiben auf diesem Gerät.</strong><p>Diese Web-App speichert Einträge lokal im Browser. Es wird kein Konto benötigt und es werden keine Daten an einen Server gesendet.</p></div>
+    </section>
+    <section id="view-entries" class="view" hidden>
+      <div class="section-head"><div><div class="eyebrow">PROTOKOLL</div><h2>Einträge</h2></div><button class="text-btn" id="exportBtn">Export ↓</button></div>
+      <div class="filter-row"><button class="filter active" data-filter="all">Alle</button><button class="filter" data-filter="fuel">Tanken</button><button class="filter" data-filter="expense">Ausgaben</button><button class="filter" data-filter="service">Wartung</button></div>
+      <div id="allList" class="entry-list empty-state">Noch keine Einträge.</div>
+      <button id="clearBtn" class="danger-btn">Alle Einträge löschen</button>
+    </section>
+  </main>
+  <footer><span>KNIS GARAGE</span><span>Dein Auto im Überblick.</span></footer>
+</div>
+<dialog id="entryDialog">
+  <form id="entryForm" method="dialog">
+    <div class="dialog-head"><div><div class="eyebrow">NEUER EINTRAG</div><h2 id="dialogTitle">Tankvorgang</h2></div><button type="button" id="closeDialog" class="icon-btn">×</button></div>
+    <input id="entryType" type="hidden" value="fuel">
+    <label>Bezeichnung<input id="eTitle" required placeholder="z. B. Vollgetankt"></label>
+    <div class="form-grid two">
+      <label>Datum<input id="eDate" type="date" required></label>
+      <label>Kosten (€)<input id="eCost" type="number" min="0" step="0.01" required placeholder="50,00"></label>
+      <label>Kilometerstand<input id="eKm" type="number" min="0" step="1" placeholder="optional"></label>
+      <label id="litresWrap">Liter<input id="eLitres" type="number" min="0" step="0.01" placeholder="optional"></label>
+    </div>
+    <label>Notiz<textarea id="eNote" rows="2" placeholder="Zusätzliche Informationen …"></textarea></label>
+    <button class="primary-btn full" type="submit">Eintrag speichern</button>
+  </form>
+</dialog>
+<script src="app.js"></script>
+</body></html>
